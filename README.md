@@ -1,6 +1,6 @@
-#K64 MCU Project Template#
+# K64 MCU Project Template
 
-##Requirements##
+## Requirements
 1. Clone the following repositories to a common location readable by your user.
     - ARMmbed/core-cmsis-k64f
     - ARM-software/CMSIS\_5
@@ -14,7 +14,7 @@
     - `arm-none-eabi-gdb` (recommended, for debugging)
     - `openocd` (recommended, for flashing)
 
-##Building Your Project##
+## Building Your Project
 1. Customize the `meson.build` file to include the files for your project.
     - Set `EXTERNAL_REPO_ROOT` to the location where you cloned the repositories
       in requirements step 1.  Do not omit the trailing slash.
@@ -35,14 +35,14 @@
 4. Run `ninja install` from `<build dir>`.  This will create a binary file which
    can be flashed to the K64 in `<build dir>`
 
-##Flashing the Target##
+## Flashing the Target
 An OpenOCD flash description usable for k64 should be included by the default
 install of OpenOCD.  In the case it is not, it has been included in `k64_files`.
 The file `scripts/flash.sh` references this included file.
 1. Run `scripts/flash.sh`.  If all goes well, the lights on your K64 board will
    light up and your code will be running immediately.
 
-##Debugging the Target##
+## Debugging the Target
 OpenOCD provides a GDB server which acts as an arbiter for the actual debug
 protocols used on target devices, OpenSDA in this case.
 Do the following:
