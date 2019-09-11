@@ -1,18 +1,28 @@
 project('k64', 'c')
 
+# Project include path.
+local_headers = []
 
-local_headers = ['include']
-c_sources = ['src/system_MK64F12.c', 'src/uart.c', 'src/main.c']
-asm_sources = [
-    'src/startup_MK64F12.S',
-#    'src/asmlib/uart0_driver.s'
+# Do not remove the core files if you are not certain of what you are doing.
+# List of C sources to compile. Relative to project root.
+c_sources = [
+    'core/system_MK64F12.c'
 ]
 
-# environmental/platform includes
-cmsis_includes = ['../CMSIS_5/CMSIS/Core/Include']
-k64_includes = ['../cmsis-core-k64f/cmsis-core-k64f']
+# List of ASM sources to compile.  Relative to project root.
+asm_sources = [
+    'core/startup_MK64F12.S',
+]
 
-# project setup
+# Environmental/platform include paths.  Edit this to where you have these
+# repositories cloned.
+EXTERNAL_REPO_ROOT = '/opt/repositories/'
+# github.com/ARM-software/CMSIS-5
+cmsis_includes = [EXTERNAL_REPO_ROOT + 'CMSIS_5/CMSIS/Core/Include']
+# github.com/ARMmbed/cmsis-core-k64f
+k64_includes = [EXTERNAL_REPO_ROOT + '../cmsis-core-k64f/cmsis-core-k64f']
+
+## project setup
 
 # debug build
 if get_option('buildtype') == 'debug'
