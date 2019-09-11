@@ -20,7 +20,7 @@ EXTERNAL_REPO_ROOT = '/opt/repositories/'
 # github.com/ARM-software/CMSIS_5
 cmsis_includes = [EXTERNAL_REPO_ROOT + 'CMSIS_5/CMSIS/Core/Include']
 # github.com/ARMmbed/cmsis-core-k64f
-k64_includes = [EXTERNAL_REPO_ROOT + '../cmsis-core-k64f/cmsis-core-k64f']
+k64_includes = [EXTERNAL_REPO_ROOT + 'cmsis-core-k64f/cmsis-core-k64f']
 
 ## project setup
 
