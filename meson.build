@@ -17,7 +17,7 @@ asm_sources = [
 # Environmental/platform include paths.  Edit this to where you have these
 # repositories cloned.
 EXTERNAL_REPO_ROOT = '/opt/repositories/'
-# github.com/ARM-software/CMSIS-5
+# github.com/ARM-software/CMSIS_5
 cmsis_includes = [EXTERNAL_REPO_ROOT + 'CMSIS_5/CMSIS/Core/Include']
 # github.com/ARMmbed/cmsis-core-k64f
 k64_includes = [EXTERNAL_REPO_ROOT + '../cmsis-core-k64f/cmsis-core-k64f']
@@ -56,7 +56,7 @@ arm_as = generator(arm_gcc, output: '@BASENAME@.o',
 asm_objects = arm_as.process(asm_sources)
 asm_static_object = static_library('asm_static_object', asm_objects)
 
-meson.add_install_script('create_bin.sh')
+meson.add_install_script('scripts/create_bin.sh')
 
 main = executable('main',
     c_sources,
