@@ -382,7 +382,7 @@ Reset_Handler:
 #endif /* __STARTUP_CLEAR_BSS */
 
 #ifndef __START
-#define __START _start
+#define __START main
 #endif
     bl    __START
     .pool
