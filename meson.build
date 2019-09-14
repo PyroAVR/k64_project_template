@@ -1,5 +1,8 @@
 project('k64', 'c')
 
+# Dependencies searchable via Meson subprojects or pkg-config/cmake
+depenencies = []
+
 # Project include path.
 local_headers = []
 
@@ -62,6 +65,7 @@ main = executable('main',
     c_sources,
     include_directories: _incl_dirs,
     link_with: asm_static_object,
+    dependencies: depenencies,
     install: true,
     install_dir: false
 )
