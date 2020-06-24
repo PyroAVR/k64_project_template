@@ -46,9 +46,23 @@ The file `scripts/flash.sh` references this included file.
 OpenOCD provides a GDB server which acts as an arbiter for the actual debug
 protocols used on target devices, OpenSDA in this case.
 Do the following:
-1. Run `openocd -f scripts/frdm-k64f.cfg`.  Ensure that your user is able to
-   directly communicate with the device.
+1. From your terminal, run `scripts/gdb.sh build/main.elf`.  You may need to
+   change the target file if you edited the inner workings of `meson.build`
 2. From another pty, run `telnet localhost 4444`.  This will allow you to
    control OpenOCD when GDB gets out of sync with the target.
-3. From another pty, run `scripts/gdb.sh build/main`.  You may need to change
-   the target file if you edited the inner workings of the `meson.build` file.
+3. In the telnet shell, type `reset init` before doing anything in GDB. This
+   allows OpenOCD to sync GDB to the current state of the MCU before continuing.
+
+When debugging and flashing, an OpenOCD server is started that runs in the
+background.  The scripts here create a PID file in case you need to kill it
+manually, which is located at the project root with the name `openocd.pid`.
+Normally, this should not be necessary.  Running
+`scripts/openocd_server.sh stop` or typing `shutdown` in the telnet console
+should be enough to end your OpenOCD session gracefully.
+
+When debugging the target, a new ROM may be flashed to the device, but GDB will
+not be aware of the change, nor the reset.  By default, the flash script causes
+the target to be running after a flash, meaning that `reset init` must be issued
+in the telnet console in order to reset and halt the target.  Note that GDB will
+still not be aware of the new debugging symbols, so it needs to be restarted or
+the ELF file reloaded for correct source-level debugging.
