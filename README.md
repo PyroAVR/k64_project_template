@@ -18,11 +18,46 @@
 2. Install [Meson](https://mesonbuild.com).
 
 3. Install the following:
-    - `arm-none-eabi-gcc`
-    - `arm-none-eabi-binutils`
-    - `arm-none-eabi-newlib` (optional, for libc functions)
-    - `arm-none-eabi-gdb` (recommended, for debugging)
-    - `openocd` (recommended, for flashing)
+    1. For Arch derivatives:
+        - `arm-none-eabi-gcc`
+        - `arm-none-eabi-binutils`
+        - `arm-none-eabi-newlib` (optional, for libc functions)
+        - `arm-none-eabi-gdb` (recommended, for debugging)
+        - `openocd` (recommended, for flashing)
+    2. For Debian derivatives:
+        - `gcc-arm-none-eabi`
+        - `binutils-arm-none-eabi`
+        - `libnewlib-arm-none-eabi`
+        - `gdb-multiarch` (includes arm-none-eabi)
+        - `openocd`
+4. (Optional) In the event that flashing fails, you may need to add some udev rules:
+    1. As root, create three files under `/etc/udev/rules.d` with the following names and contents:
+        - `45-mbed_debugger.rules`
+            ```
+            SUBSYSTEM=="usb", ATTR{idVendor}=="0d28", ATTR{idProduct}=="0204", MODE="0660", GROUP="plugdev"
+            ```
+        - `50-tty_cmsis.rules`
+            ```
+            KERNEL=="ttyACM[0 ... 9]" SYMLINK+="%k" GROUP="plugdev" MODE="0660"
+            ```
+        - `99-hidraw-permissions.rules`
+            ```
+            KERNEL=="hidraw*", SUBSYSTEM=="hidraw", MODE="0664", GROUP="plugdev" 
+            ```
+    2. Create the plugdev group, if it does not exist:
+        ```
+        sudo getent group plugdev || sudo groupadd plugdev
+        ```
+    3. Add your user to the plugdev group:
+        ```
+        sudo usermod -aG plugdev $USER
+        ```
+    4. And finally, reload the udev rules:
+        ```
+        sudo udevadm control --reload-rules
+        sudo udevadm trigger
+        ```
+
 
 ## Building Your Project
 1. Customize the `meson.build` file to include the files for your project.
